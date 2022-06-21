@@ -1,0 +1,68 @@
+---
+title: "Assignment2"
+author: "emmanuel owireku addo"
+date: '2022-06-20'
+output:
+  word_document: default
+  pdf_document: default
+---
+#The data contains data of American killed by police in the year 2015 .This data has 467 entities with 34 variables.Looking much into it contains information about people address names , race city ,state ,household income and many other important information about individuals involved in this killings .looking at the data it was observed that black Americans who lived in poorer communities were likely to be killed than people living in richer communities. 
+
+
+```{r, include=FALSE}
+#installed.packages("tidyverse")
+#install.packages("knitr")
+#install.packages("bslib")
+#install.packages("dplyr")
+library(tidyverse)
+library(bslib)
+library(knitr)
+library(dplyr)
+
+```
+
+
+
+```{r,include=TRUE}
+url <- "https://raw.githubusercontent.com/fivethirtyeight/data/master/police-killings/police_killings.csv"
+need <- read.csv(url)
+
+head(need,2)
+
+#lets select just name age gender and raceethnicity 
+select(need,name,age,gender,raceethnicity)
+
+#lets rename the selected data set as newneed 
+newneed<-select(need,name,age,gender,raceethnicity)
+head(newneed,2)
+# lets group data by state 
+group_by(need,state)
+```
+
+
+```{r, echo = TRUE}
+text_tbl <- data.frame(
+Names = c("h_income","county_id"), 
+Description = c("house hold income", "county identity"))
+text_tbl
+```
+
+```{r, echo = TRUE}
+data_pick3 <- select(need, county_bucket, county_id, armed)
+
+Summarytable<-summary(data_pick3)
+
+Summarytable
+```
+
+```{r, echo = TRUE}
+text_tbl <- data.frame(
+Names = c("h_income","county_id"),
+Description = c("house hold income", "county identity"))
+text_tbl
+
+knitr::kable(text_tbl, "pipe")
+
+```
+
+
